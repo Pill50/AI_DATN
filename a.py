@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = r'F:\test\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = r'./tesseract.exe'
 
 # Load the image
 img = cv2.imread("img2.png")
