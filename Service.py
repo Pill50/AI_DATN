@@ -16,6 +16,7 @@ class RequestBody(BaseModel):
     url: str
 
 def downloadImg(url: str):
+    url = url.replace("https","http")
     urllib.request.urlretrieve(url, "img.jpg") 
     
     img = Image.open(r"img.jpg") 
