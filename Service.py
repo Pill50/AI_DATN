@@ -56,7 +56,7 @@ def detect():
 
         if w > 10 and h > 10:  
             x_roi1 = 143 
-            y_roi = y + int(2 / 2.54 * 96) 
+            y_roi = 75
             w_roi = int(2.5 / 2.54 * 96)
             h_roi = int(0.7 / 2.54 * 96)  
 
@@ -84,5 +84,5 @@ def handle_detection(requestBody: RequestBody):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=4000)
+    uvicorn.run(app, host="localhost", port=4000)
 
