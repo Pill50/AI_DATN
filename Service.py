@@ -66,9 +66,9 @@ def detect():
         x, y, w, h = cv2.boundingRect(contour)
 
         if w > 10 and h > 10:  
-            x_roi1 = 143 
+            x_roi1 = 140 
             y_roi = 75
-            w_roi = int(2.5 / 2.54 * 96)
+            w_roi = int(2.6 / 2.54 * 96)
             h_roi = int(0.7 / 2.54 * 96)  
 
             roi1 = img[y_roi:y_roi + h_roi, x_roi1:x_roi1 + w_roi]
