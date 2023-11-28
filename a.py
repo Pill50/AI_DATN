@@ -2,14 +2,14 @@ import cv2
 import numpy as np
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = r'./tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = r'.\tesseract.exe'
 
 # Load the image
-img = cv2.imread("img2.png")
+img = cv2.imread("img4.jpg")
 
 # Convert to grayscale
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
+    
 # Apply GaussianBlur to reduce noise
 blur = cv2.GaussianBlur(gray, (5, 5), 0)
 
@@ -33,46 +33,24 @@ contours = sorted(contours, key=cv2.contourArea, reverse=True)
 for contour in contours:
     x, y, w, h = cv2.boundingRect(contour)
 
-    if w > 10 and h > 10:  # Adjust the threshold based on your specific case
-        # Calculate the position and size of the 4 rectangles
-        x_roi1 = min(x + 124, img.shape[1] - 1)  # Ensure x_roi1 is within the image width
-        y_roi = y + int(2.65 / 2.54 * 96)  # 2cm converted to pixels at 96 DPI
-        w_roi = int(0.5 / 2.54 * 96)
-        h_roi = int(0.8 / 2.54 * 96)  # 2cm converted to pixels at 96 DPI
+    if w > 10 and h > 10:  
+        x_roi1 = 143 
+        y_roi = y + int(2 / 2.54 * 96) 
+        w_roi = int(2.5 / 2.54 * 96)
+        h_roi = int(0.7 / 2.54 * 96)  
 
-        x_roi2 = min(x_roi1 + w_roi + 6, img.shape[1] - 1)  # Ensure x_roi2 is within the image width
-        x_roi3 = min(x_roi2 + w_roi + 6, img.shape[1] - 1)  # Ensure x_roi3 is within the image width
-        x_roi4 = min(x_roi3 + w_roi + 6, img.shape[1] - 1)  # Ensure x_roi4 is within the image width
-
-        # Extract the 4 ROIs from the image
         roi1 = img[y_roi:y_roi + h_roi, x_roi1:x_roi1 + w_roi]
-        roi2 = img[y_roi:y_roi + h_roi, x_roi2:x_roi2 + w_roi]
-        roi3 = img[y_roi:y_roi + h_roi, x_roi3:x_roi3 + w_roi]
-        roi4 = img[y_roi:y_roi + h_roi, x_roi4:x_roi4 + w_roi]
 
-        # Perform OCR on each ROI
         text1 = pytesseract.image_to_string(roi1, config="--psm 6 digits")
-        text2 = pytesseract.image_to_string(roi2, config="--psm 6 digits")
-        text3 = pytesseract.image_to_string(roi3, config="--psm 6 digits")
-        text4 = pytesseract.image_to_string(roi4, config="--psm 6 digits")
 
-        print("OCR Result for ROI 1:", text1)
-        print("OCR Result for ROI 2:", text2)
-        print("OCR Result for ROI 3:", text3)
-        print("OCR Result for ROI 4:", text4)
+        print("OCR Result:", text1)
 
-        # Draw rectangles around the detected regions for visualization
         cv2.rectangle(img, (x_roi1, y_roi), (x_roi1 + w_roi, y_roi + h_roi), (0, 255, 0), 2)
-        cv2.rectangle(img, (x_roi2, y_roi), (x_roi2 + w_roi, y_roi + h_roi), (0, 255, 0), 2)
-        cv2.rectangle(img, (x_roi3, y_roi), (x_roi3 + w_roi, y_roi + h_roi), (0, 255, 0), 2)
-        cv2.rectangle(img, (x_roi4, y_roi), (x_roi4 + w_roi, y_roi + h_roi), (0, 255, 0), 2)
 
-        break  # Stop after processing the first contour (largest contour)
+        break 
 
-# Save the final result
 cv2.imwrite("result.jpg", img)
-
-# Display the results
 cv2.imshow("Original Image", img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
