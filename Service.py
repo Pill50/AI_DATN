@@ -19,8 +19,8 @@ def downloadImg(url: str):
     url = url.replace("https","http")
     urllib.request.urlretrieve(url, "img.jpg") 
     
-    img = Image.open(r"img.jpg") 
-    img.show()
+    # img = Image.open(r"img.jpg") 
+    # img.show()
 
 def detect():
     pytesseract.pytesseract.tesseract_cmd = r'.\tesseract.exe'
@@ -69,7 +69,7 @@ def detect():
 
 
     cv2.imwrite("result.jpg", img)
-    cv2.imshow("Original Image", img)
+    # cv2.imshow("Original Image", img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
