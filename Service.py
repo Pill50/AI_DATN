@@ -9,8 +9,19 @@ from PIL import Image
 import cv2
 import numpy as np
 import pytesseract
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class RequestBody(BaseModel):
     url: str
@@ -84,5 +95,5 @@ def handle_detection(requestBody: RequestBody):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=4000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
